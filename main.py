@@ -1,8 +1,21 @@
 from parse import *
 
-print("Benvingut al buscaRutes v1.0 - versió ESP \n")
+def main():
 
-while 1:
-    print("Quin algorisme voldràs utilitzar? \n 1.- A* \n 2.- CSP")
+    print("Benvingut al buscaRutes v1.0 - versió ESP \n")
 
-    opcio = input()
+    while 1:
+
+        opcio = input("Quin algorisme voldràs utilitzar? \n 1.- A* \n 2.- CSP\n")
+
+        if opcio == "1":
+            print("pepe")
+        else:
+            print("gutaaavo")
+
+
+
+
+
+if __name__ == "__main__":
+    main()

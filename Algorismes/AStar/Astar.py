@@ -1,5 +1,7 @@
 from Algorismes.AStar.SolutionASTAR import SolutionASTAR
 
+#comentari per Marc - el comentari comença amb Marc:
+#Marc: Disclaymer: elguns comentaris/codi afegit per la meva persona, poden ser incorrectes ja que em trobo sota els afectes de substancies psicotropiques com, la falta de son, o el cansament
 
 class Astar():
 
@@ -25,7 +27,7 @@ class Astar():
             nodesOcupats.append(n)
             if (n.nom == nodeDesti.nom):
                 fi = self.true
-                n.trace.append(n)
+                n.trace.append(n)           #Marc: no fa falta posar a true, si despres fem un return, ja surts del bucle directe, sino podries fer un brake
                 return n
 
             else:
