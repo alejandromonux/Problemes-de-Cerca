@@ -1,17 +1,5 @@
 import xlrd
 
-#Marc: return a list of dictionary
-#a dictionary is like a hashmap
-
-#search in dictionary:
-#dictionary[key]
-#if we want to search in the returned object:
-# list -> dictionary -> data
-# data[listPosition][dictionaryKey]
-# listPosition = int
-# dictionaryKey = string ('Barcelona', 'Madrid', 'Valencia', ...)
-
-#
 #Return:
 # List: list of lists with distance
 # table: dictionary
