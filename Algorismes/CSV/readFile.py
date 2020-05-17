@@ -11,6 +11,14 @@ import xlrd
 # listPosition = int
 # dictionaryKey = string ('Barcelona', 'Madrid', 'Valencia', ...)
 
+#
+#Return:
+# List: list of lists with distance
+# table: dictionary
+#                   key: city
+#                   value: index of the list
+#
+#
 
 def readExcel():
 
@@ -28,12 +36,22 @@ def readExcel():
             elm[first_row[col]] = worksheet.cell_value(row, col+1)
         data.append(elm)
 
-    #for pepe in data:
-    #    print(pepe)
-    #print(len(pepe))
-    #print(worksheet.ncols)
-    #print(data[1]['Barcelona'])
+    gerard = 0
+    tabla = {}
+    for gutavo in data:
+        for pepe in gutavo:
+            tabla[pepe] = gerard
+            gerard += 1
+        break
 
-    return data
+    list = []
 
-#readExcel()
+    for gutavo in data:
+        aux = []
+        for pepe in gutavo:
+            aux.append(gutavo[pepe])
+        list.append(aux)
+
+    return list, tabla
+
+readExcel()
