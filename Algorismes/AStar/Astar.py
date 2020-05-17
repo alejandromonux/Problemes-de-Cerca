@@ -1,5 +1,3 @@
-from Algorismes.AStar.SolutionASTAR import SolutionASTAR
-
 #comentari per Marc - el comentari comença amb Marc:
 #Marc: Disclaymer: elguns comentaris/codi afegit per la meva persona, poden ser incorrectes ja que em trobo sota els afectes de substancies psicotropiques com, la falta de son, o el cansament
 
@@ -10,12 +8,11 @@ class Astar():
     def getCostTotal(n):
         return n.costAcumulat
 
-    def __init__(self, solucio : SolutionASTAR ):
-        self.solucio = solucio
+    def __init__(self):
         pass
 
-    #g(n)   -> cost (pes) de la aresta
-    #h'(n)  -> 
+    #g(n)   -> cost (pes) del node actual
+    #h'(n)  -> cost (pes) de la aresta en cuestió
     def  AStarAlgorithm(self, nodeOrigen, nodeDesti):
 
         nodesLliures = []
@@ -23,11 +20,11 @@ class Astar():
         #Alternativamente, si monto yo el graph puedo poner un campo de visitado
         fi = self.false
         n = nodeOrigen
-        while ((nodesLliures != nodesOcupats) & fi):
+        while ((nodesLliures != nodesOcupats)):
             nodesOcupats.append(n)
             if (n.nom == nodeDesti.nom):
-                fi = self.true
-                n.trace.append(n)           #Marc: no fa falta posar a true, si despres fem un return, ja surts del bucle directe, sino podries fer un brake
+                #fi = self.true #Marc: no fa falta posar a true, si despres fem un return, ja surts del bucle directe, sino podries fer un brake
+                n.trace.append(n)
                 return n
 
             else:
@@ -46,20 +43,26 @@ class Astar():
                     if esta == self.false:
                         # Insertem el camí del inici fins al node
                         n.trace.append(n)
-                        cami.desti.trace = n.trace
+                        cami.desti.trace = n.trace ##Este destino tendrá el camino del inicio hasta n (siendo n su padre)
                         # Actualitzem el cost
                         cami.desti.costAcumulat = n.costAcumulat + cami.cost
                         nodesLliures.append(cami.desti)
                     else:
                         if 0 <= nodeIndex <= rangLliures:
                             #forma part dels lliures
-                            #TODO: Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
-                            min(n.trace.len nodesTotals[nodeIndex].trace.len)
-                            pass
+                            #Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
+                            if(n.trace.len >= nodesTotals[nodeIndex].trace.len):
+                                 nodesLliures[nodeIndex].trace = n.trace
+                            else:
+                                n.trace = nodesLliures[nodeIndex].trace
+
                         else:
-                            # TODO: Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
+                            #Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                             #forma part dels ocupats
-                            pass
+                            if (n.trace.len >= nodesTotals[nodeIndex].trace.len):
+                                nodesOcupats[nodeIndex-rangLliures].trace = n.trace
+                            else:
+                                n.trace = nodesOcupats[nodeIndex-rangLliures].trace
 
                 #Ordenem els nodes del array de nodes disponibles
                 nodesLliures.sort(nodesLliures, key=self.getCostTotal)
