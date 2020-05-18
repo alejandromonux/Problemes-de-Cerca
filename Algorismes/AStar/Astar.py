@@ -65,7 +65,7 @@ class Astar():
                                 n.trace = nodesOcupats[nodeIndex-rangLliures].trace
 
                 #Ordenem els nodes del array de nodes disponibles
-                nodesLliures.sort(nodesLliures, key=self.getCostTotal)
+                nodesLliures.sort(key=self.getCostTotal)
                 n = nodesLliures.pop(0)
 
         if fi == self.false:
