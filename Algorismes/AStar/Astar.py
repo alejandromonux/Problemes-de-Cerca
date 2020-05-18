@@ -1,6 +1,8 @@
 #comentari per Marc - el comentari comença amb Marc:
 #Marc: Disclaymer: elguns comentaris/codi afegit per la meva persona, poden ser incorrectes ja que em trobo sota els afectes de substancies psicotropiques com, la falta de son, o el cansament
 
+#TODO: canvair a distancia total, no per nodes recorreguts
+
 class Astar():
 
     true = 1
