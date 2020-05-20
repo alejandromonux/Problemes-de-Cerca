@@ -7,6 +7,10 @@ import xlrd
 #                   value: index of the list
 #
 #
+from Algorismes.graphEstructure.edge import edge
+from Algorismes.graphEstructure.graph import Graph
+from Algorismes.graphEstructure.vertex import Vertex
+
 
 def readExcel():
 
@@ -25,10 +29,20 @@ def readExcel():
         data.append(elm)
 
     gerard = 0
+
+    graph = []
+
+    for gutavo in data:
+        for pepe in gutavo:
+            graph.append(Vertex(pepe, None))
+        break
+
     tabla = {}
+    tabla2 = {}
     for gutavo in data:
         for pepe in gutavo:
             tabla[pepe] = gerard
+            tabla2[gerard] = pepe
             gerard += 1
         break
 
@@ -38,8 +52,22 @@ def readExcel():
         aux = []
         for pepe in gutavo:
             aux.append(gutavo[pepe])
+            print(gutavo[pepe])
         list.append(aux)
 
-    return list, tabla
+    i = 0
+    while i < len(list):
+        camins = []
+        j = 0
+        while j < len(list[i]):
+            if list[i][j] != '-':
+                camins.append(edge(graph[i], graph[j], list[i][j]))
+            j += 1
+        graph[i].camins = camins
+        print(camins)
+        i += 1
+
+    finalGraph = Graph(graph)
+    return finalGraph
 
 readExcel()
