@@ -53,7 +53,7 @@ class Astar():
                         if 0 <= nodeIndex <= rangLliures:
                             #forma part dels lliures
                             #Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
-                            if(n.trace.len >= nodesTotals[nodeIndex].trace.len):
+                            if( self.getCostTotal(n) >= self.getCostTotal(nodesTotals[nodeIndex])):
                                  nodesLliures[nodeIndex].trace = n.trace
                             else:
                                 n.trace = nodesLliures[nodeIndex].trace
@@ -61,10 +61,12 @@ class Astar():
                         else:
                             #Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                             #forma part dels ocupats
-                            if (n.trace.len >= nodesTotals[nodeIndex].trace.len):
+                            if (self.getCostTotal(n) >= self.getCostTotal(nodesTotals[nodeIndex])):
                                 nodesOcupats[nodeIndex-rangLliures].trace = n.trace
+                                nodesOcupats[nodeIndex - rangLliures].costAcumulat = self.getCostTotal(n)
                             else:
                                 n.trace = nodesOcupats[nodeIndex-rangLliures].trace
+                                n.costAcumulat = self.getCostTotal(n)
 
                 #Ordenem els nodes del array de nodes disponibles
                 nodesLliures.sort(key=self.getCostTotal)
