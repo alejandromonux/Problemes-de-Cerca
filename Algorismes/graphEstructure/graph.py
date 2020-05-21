@@ -18,3 +18,6 @@ class Graph:
             else:
                 i = i + 1
 
+
+    def getLen(self):
+        return len(self.llista_vertex)

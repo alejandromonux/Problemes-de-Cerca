@@ -7,15 +7,14 @@ import xlrd
 #                   value: index of the list
 #
 #
-from Algorismes.graphEstructure.edge import edge
-from Algorismes.graphEstructure.graph import Graph
-from Algorismes.graphEstructure.vertex import Vertex
-
+from ..graphEstructure.edge import edge
+from ..graphEstructure.graph import Graph
+from ..graphEstructure.vertex import Vertex
 
 def readExcel():
 
-    workbook = xlrd.open_workbook('dataset.xlsx')
-    workbook = xlrd.open_workbook('dataset.xlsx', on_demand=True)
+    workbook = xlrd.open_workbook('Algorismes/CSV/dataset.xlsx')
+    workbook = xlrd.open_workbook('Algorismes/CSV/dataset.xlsx', on_demand=True)
     worksheet = workbook.sheet_by_index(0)
     first_row = []  # The row where we stock the name of the column
     for col in range(worksheet.ncols-1):
