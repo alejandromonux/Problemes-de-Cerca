@@ -32,11 +32,11 @@ def CSP(nodeOrigen, nodeDesti):
 
 
         #caminsOrdenats = n.camins
-        #caminsOrdenats.sort(key = self.getCostCami)
+        #caminsOrdenats.sort(key = getCostCami)
         #següentCiutat = caminsOrdenats.pop(0)
         
         #Agafem la següent ciutat amb cost menor i avançem per allà
-        següentCiutat = n.camins.sort(key = self.getCostCami).pop(0)
+        següentCiutat = n.camins.sort(key = getCostCami).pop(0)
         n.trace.append(següentCiutat.desti)
         següentCiutat.desti.trace = n.trace
         següentCiutat.desti.costAcumulat = n.costAcumulat + següentCiutat.cost
