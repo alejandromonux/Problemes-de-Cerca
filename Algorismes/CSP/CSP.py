@@ -24,6 +24,7 @@ def getCostCami(n):
 def CSP(nodeOrigen, nodeDesti):
     acabar = 0
     n = nodeOrigen
+    n.trace.append(nodeOrigen)
     while acabar == 0:
         # Busquem si podem arribar ja al destí desde aqui
         for cami in n.camins:
@@ -41,12 +42,9 @@ def CSP(nodeOrigen, nodeDesti):
         caminsOrdenats = n.camins
         i = 0
         for cami in caminsOrdenats:
-            if cami.desti.nom == nodeOrigen.nom:
-                caminsOrdenats.pop(i)
-            else:
-                for trace in n.trace:
-                    if cami.desti.nom == trace.nom:
-                        caminsOrdenats.pop(i)
+            for trace in n.trace:
+                if cami.desti.nom == trace.nom:
+                    caminsOrdenats.pop(i)
             i += 1
 
         caminsOrdenats.sort(key=getCostCami, reverse=True)
