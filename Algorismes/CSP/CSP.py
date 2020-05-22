@@ -18,13 +18,13 @@ def getCostTotal(n):
 def getCostCami(n):
     return len(n.desti.camins)
 
-def CSP(self, nodeOrigen, nodeDesti):
+def CSP(nodeOrigen, nodeDesti):
     acabar = 0
     n = nodeOrigen
-    while(acabar):
+    while acabar == 0:
         #Busquem si podem arribar ja al destí desde aqui
         for cami in n.camins:
-            if cami.nom == cami.desti.nom:
+            if nodeDesti.nom == cami.desti.nom:
                 n.trace.append(cami.desti)
                 cami.desti.trace = n.trace
                 cami.desti.costAcumulat = n.costAcumulat + cami.cost

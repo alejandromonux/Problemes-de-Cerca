@@ -3,6 +3,8 @@ from parse import *
 from Algorismes.AStar.Astar import AStarAlgorithm
 from Algorismes.CSV.readFile import *
 from Algorismes.AStar import *
+from Algorismes.CSP.CSP import CSP
+
 def main():
 
     print("Benvingut al buscaRutes v1.0 - versió ESP \n")
@@ -17,7 +19,9 @@ def main():
             n = AStarAlgorithm(graphCamins.llista_vertex[graphCamins.searchCityIndex("Barcelona")],graphCamins.llista_vertex[graphCamins.searchCityIndex("Bilbao")], graphCamins.getLen())
             print(n.showTrace())
         else:
-            print("gutaaavo")
+
+            n = CSP(graphCamins.llista_vertex[graphCamins.searchCityIndex("Barcelona")],graphCamins.llista_vertex[graphCamins.searchCityIndex("Sevilla")])
+            print(n.showTrace())
 
 
 
