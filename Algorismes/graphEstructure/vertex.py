@@ -12,7 +12,9 @@ class Vertex():
         for ciutat in self.trace:
             if(index == len(self.trace)-1):
                 out = out + ciutat.nom
-            out = out + ciutat.nom + " -> "
+            else:
+                out = out + ciutat.nom + " -> "
+            index+=1
         out = out + "\n" + "Cost:" + str(self.costAcumulat) +".\n"
 
         return out

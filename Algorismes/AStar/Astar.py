@@ -39,10 +39,18 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
                     #TODO: ENTRA AQUÍ A CADA CAMINO CON LA MISMA N Y POR ESO SE REPITE TANTAS VECES LA MISMA CIUDAD EN EL TRACE. SE HA DE ARREGLAR
 
                     # Insertem el camí del inici fins al node
-                    n.trace.append(n)
-                    cami.desti.costAcumulat = n.costAcumulat + cami.cost
+                    i = 0
+                    go = 1
+                    for trace in n.trace:
+                        if trace.nom == n.nom:
+                            go = 0
+                    i += 1
+
+                    if go:
+                        n.trace.append(n)
+
                     cami.desti.trace = n.trace  ##Este destino tendrá el camino del inicio hasta n (siendo n su padre)
-                    # Actualitzem el cost
+                        # Actualitzem el cost
                     cami.desti.costAcumulat = n.costAcumulat + cami.cost
                     nodesLliures.append(cami.desti)
                 else:
