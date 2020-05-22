@@ -39,6 +39,15 @@ def CSP(nodeOrigen, nodeDesti):
 
         # Agafem la següent ciutat amb cost menor i avançem per allà
         caminsOrdenats = n.camins
+        i = 0
+        for cami in caminsOrdenats:
+            if cami.desti.nom == nodeOrigen.nom:
+                caminsOrdenats.pop(i)
+            else:
+                for trace in n.trace:
+                    if cami.desti.nom == trace.nom:
+                        caminsOrdenats.pop(i)
+            i += 1
 
         caminsOrdenats.sort(key=getCostCami, reverse=True)
         següentCiutat = caminsOrdenats.pop()
