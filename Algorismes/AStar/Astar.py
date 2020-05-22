@@ -1,6 +1,6 @@
 # comentari per Marc - el comentari comença amb Marc:
 # Marc: Disclaymer: elguns comentaris/codi afegit per la meva persona, poden ser incorrectes ja que em trobo sota els afectes de substancies psicotropiques com, la falta de son, o el cansament
-
+import sys
 
 
 def getCostTotal(n):
@@ -20,15 +20,13 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
         if (n.nom == nodeDesti.nom):
             n.trace.append(n)
             return n
-
         else:
             nodesTotals = nodesLliures + nodesOcupats
             rangLliures = len(nodesLliures)
-            rangOcupats = len(nodesOcupats)
             for cami in n.camins:
                 esta = 0
                 nodeIndex = 0
-                # comprovem que el node no estigui en la llista de nodes visitats
+                # comprovem que el node no estigui en la llista de nodes guardats
                 for node in nodesTotals:
                     if (node.nom == cami.desti.nom):
                         esta = 1
@@ -36,42 +34,44 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
                     nodeIndex += 1
 
                 if esta == 0:
-                    #TODO: ENTRA AQUÍ A CADA CAMINO CON LA MISMA N Y POR ESO SE REPITE TANTAS VECES LA MISMA CIUDAD EN EL TRACE. SE HA DE ARREGLAR
-
-                    # Insertem el camí del inici fins al node
-                    i = 0
                     go = 1
-                    for trace in n.trace:
-                        if trace.nom == n.nom:
+                    if len(n.trace) != 0:
+                        if n.trace[len(n.trace)-1].nom == n.nom:
                             go = 0
-                    i += 1
 
                     if go:
                         n.trace.append(n)
-
                     cami.desti.trace = n.trace  ##Este destino tendrá el camino del inicio hasta n (siendo n su padre)
-                        # Actualitzem el cost
+                    # Actualitzem el cost
                     cami.desti.costAcumulat = n.costAcumulat + cami.cost
                     nodesLliures.append(cami.desti)
                 else:
                     if 0 <= nodeIndex <  rangLliures:
                         # forma part dels lliures
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
-                        if (getCostTotal(n) >= getCostTotal(nodesTotals[nodeIndex])):
+                        if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
+                            if not n.isInTrace(n.nom):
+                                n.trace.append(n)
                             nodesLliures[nodeIndex].trace = n.trace
+                            nodesLliures[nodeIndex].costAcumulat = getCostTotal(n) + cami.cost
                         else:
                             n.trace = nodesLliures[nodeIndex].trace
+                            n.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
 
                     else:
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                         # forma part dels ocupats
-                        if (getCostTotal(n) >= getCostTotal(nodesTotals[nodeIndex])):
+                        if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
+                            if not n.isInTrace(n.nom):
+                                n.trace.append(n)
                             nodesOcupats[nodeIndex - rangLliures].trace = n.trace
-                            nodesOcupats[nodeIndex - rangLliures].costAcumulat = getCostTotal(n)
+                            nodesOcupats[nodeIndex - rangLliures].costAcumulat = getCostTotal(n) + cami.cost
                         else:
                             n.trace = nodesOcupats[nodeIndex - rangLliures].trace
-                            n.costAcumulat = getCostTotal(n)
+                            n.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
 
+            if (n.nom == nodeOrigen.nom):
+                n.costAcumulat = sys.float_info.max
             # Ordenem els nodes del array de nodes disponibles
             nodesLliures.sort(key=getCostTotal)
             n = nodesLliures.pop(0)

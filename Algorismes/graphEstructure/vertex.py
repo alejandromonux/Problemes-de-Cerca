@@ -18,3 +18,10 @@ class Vertex():
         out = out + "\n" + "Cost:" + str(self.costAcumulat) +".\n"
 
         return out
+
+    def isInTrace(self, nom):
+        for t in self.trace:
+            if(t.nom  == nom):
+                return 1
+
+        return 0
