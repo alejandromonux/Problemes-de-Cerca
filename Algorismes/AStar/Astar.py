@@ -3,6 +3,8 @@
 import copy
 import sys
 
+from Algorismes.graphEstructure.vertex import Vertex
+
 
 def getCostTotal(n):
     return n.costAcumulat
@@ -40,9 +42,11 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
                         if n.trace[len(n.trace)-1].nom == n.nom:
                             go = 0
 
+                    auxTrace = copy.deepcopy(n.trace)
                     if go:
-                        n.trace.append(n)
-                    cami.desti.trace = n.trace  ##Este destino tendrá el camino del inicio hasta n (siendo n su padre)
+                        auxTrace.append(n)
+                    cami.desti.trace = auxTrace  ##Este destino tendrá el camino del inicio hasta n (siendo n su padre)
+
                     # Actualitzem el cost
                     cami.desti.costAcumulat = n.costAcumulat + cami.cost
                     nodesLliures.append(cami.desti)
@@ -50,39 +54,48 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
                     rangLliures = len(nodesLliures)
 
                 else:
-                    if 0 <= nodeIndex <  rangLliures:
+                    if 0 <= nodeIndex < rangLliures:
                         # forma part dels lliures
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
-                        if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
-                            auxTrace = copy.deepcopy(n.trace)
+                        if getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex]):
+
+                            auxTrace = []
+                            for node in n.trace:
+                                aux = Vertex(node.nom, node.camins)
+                                auxTrace.append(aux)
+
                             if not n.isInTrace(n.nom):
-                                # n.trace.append(n)
-                                auxTrace = copy.deepcopy(n.trace)
                                 auxTrace.append(n)
+
                             nodesLliures[nodeIndex].trace = auxTrace
                             nodesLliures[nodeIndex].costAcumulat = getCostTotal(n) + cami.cost
                         else:
-                            #n.trace = nodesLliures[nodeIndex].trace
-                            cami.desti.trace = copy.deepcopy(nodesLliures[nodeIndex].trace)
-                            #n.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
+                            newTrace = []
+                            for node in nodesLliures[nodeIndex].trace:
+                                aux = Vertex(node.nom, node.camins)
+                                newTrace.append(aux)
+                            cami.desti.trace = newTrace
                             cami.desti.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
 
                     else:
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                         # forma part dels ocupats
-                        if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
-                            auxTrace = copy.deepcopy(n.trace)
-                            if not n.isInTrace(n.nom):
-                                #n.trace.append(n)
-                                auxTrace = copy.deepcopy(n.trace)
-                                auxTrace.append(n)
+                        if getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex]):
+                            auxTrace = []
+                            for node in n.trace:
+                                aux = Vertex(node.nom, node.camins)
+                                auxTrace.append(aux)
 
+                            if not n.isInTrace(n.nom):
+                                auxTrace.append(n)
                             nodesOcupats[nodeIndex - rangLliures].trace = auxTrace
                             nodesOcupats[nodeIndex - rangLliures].costAcumulat = getCostTotal(n) + cami.cost
                         else:
-                            #n.trace = nodesOcupats[nodeIndex - rangLliures].trace
-                            cami.desti.trace = copy.deepcopy(nodesOcupats[nodeIndex - rangLliures].trace)
-                            #n.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
+                            newTrace = []
+                            for node in nodesOcupats[nodeIndex - rangLliures].trace:
+                                aux = Vertex(node.nom, node.camins)
+                                newTrace.append(aux)
+                            cami.desti.trace = newTrace
                             cami.desti.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
 
             if (n.nom == nodeOrigen.nom):
