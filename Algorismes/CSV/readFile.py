@@ -51,7 +51,6 @@ def readExcel():
         aux = []
         for pepe in gutavo:
             aux.append(gutavo[pepe])
-            print(gutavo[pepe])
         list.append(aux)
 
     i = 0
@@ -63,7 +62,6 @@ def readExcel():
                 camins.append(edge(graph[i], graph[j], list[i][j]))
             j += 1
         graph[i].camins = camins
-        print(camins)
         i += 1
 
     finalGraph = Graph(graph)

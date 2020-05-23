@@ -1,5 +1,6 @@
 # comentari per Marc - el comentari comença amb Marc:
 # Marc: Disclaymer: elguns comentaris/codi afegit per la meva persona, poden ser incorrectes ja que em trobo sota els afectes de substancies psicotropiques com, la falta de son, o el cansament
+import copy
 import sys
 
 
@@ -45,30 +46,44 @@ def AStarAlgorithm(nodeOrigen, nodeDesti, graphLen):
                     # Actualitzem el cost
                     cami.desti.costAcumulat = n.costAcumulat + cami.cost
                     nodesLliures.append(cami.desti)
+                    nodesTotals = nodesLliures + nodesOcupats
+                    rangLliures = len(nodesLliures)
+
                 else:
                     if 0 <= nodeIndex <  rangLliures:
                         # forma part dels lliures
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                         if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
+                            auxTrace = copy.deepcopy(n.trace)
                             if not n.isInTrace(n.nom):
-                                n.trace.append(n)
-                            nodesLliures[nodeIndex].trace = n.trace
+                                # n.trace.append(n)
+                                auxTrace = copy.deepcopy(n.trace)
+                                auxTrace.append(n)
+                            nodesLliures[nodeIndex].trace = auxTrace
                             nodesLliures[nodeIndex].costAcumulat = getCostTotal(n) + cami.cost
                         else:
-                            n.trace = nodesLliures[nodeIndex].trace
-                            n.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
+                            #n.trace = nodesLliures[nodeIndex].trace
+                            cami.desti.trace = copy.deepcopy(nodesLliures[nodeIndex].trace)
+                            #n.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
+                            cami.desti.costAcumulat = getCostTotal(nodesLliures[nodeIndex])
 
                     else:
                         # Reconstruir el camí entre n2 i I pel camí existent i pel nou camí. Guardar el més curt.
                         # forma part dels ocupats
                         if (getCostTotal(n) + cami.cost < getCostTotal(nodesTotals[nodeIndex])):
+                            auxTrace = copy.deepcopy(n.trace)
                             if not n.isInTrace(n.nom):
-                                n.trace.append(n)
-                            nodesOcupats[nodeIndex - rangLliures].trace = n.trace
+                                #n.trace.append(n)
+                                auxTrace = copy.deepcopy(n.trace)
+                                auxTrace.append(n)
+
+                            nodesOcupats[nodeIndex - rangLliures].trace = auxTrace
                             nodesOcupats[nodeIndex - rangLliures].costAcumulat = getCostTotal(n) + cami.cost
                         else:
-                            n.trace = nodesOcupats[nodeIndex - rangLliures].trace
-                            n.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
+                            #n.trace = nodesOcupats[nodeIndex - rangLliures].trace
+                            cami.desti.trace = copy.deepcopy(nodesOcupats[nodeIndex - rangLliures].trace)
+                            #n.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
+                            cami.desti.costAcumulat = getCostTotal(nodesOcupats[nodeIndex - rangLliures])
 
             if (n.nom == nodeOrigen.nom):
                 n.costAcumulat = sys.float_info.max
