@@ -4,6 +4,7 @@ from Algorismes.AStar.Astar import AStarAlgorithm
 from Algorismes.CSV.readFile import *
 from Algorismes.AStar import *
 from Algorismes.CSP.CSP import CSP
+import time
 
 def main():
 
@@ -34,11 +35,19 @@ def main():
         opcio = input("Quin algorisme voldràs utilitzar? \n 1.- A* \n 2.- CSP\n")
 
         if opcio == "1":
+            a = time.time()
             n = AStarAlgorithm(graphCamins.llista_vertex[indexOrigen],graphCamins.llista_vertex[indexDesti], graphCamins.getLen())
+            b = time.time()
             print(n.showTrace())
+            print(b - a)
+            print("seconds\n")
         else:
+            a = time.time()
             n = CSP(graphCamins.llista_vertex[indexOrigen],graphCamins.llista_vertex[indexDesti])
+            b = time.time()
             print(n.showTrace())
+            print(b - a)
+            print("seconds\n")
 
 
 

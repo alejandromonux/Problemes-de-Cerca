@@ -7,9 +7,9 @@ import xlrd
 #                   value: index of the list
 #
 #
-from ..graphEstructure.edge import edge
-from ..graphEstructure.graph import Graph
-from ..graphEstructure.vertex import Vertex
+from Algorismes.graphEstructure.edge import edge
+from Algorismes.graphEstructure.graph import Graph
+from Algorismes.graphEstructure.vertex import Vertex
 
 def readExcel():
 
